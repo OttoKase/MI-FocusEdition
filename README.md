@@ -46,7 +46,7 @@ Make sure you have a file named `requirements.txt` in the root directory of your
 
 Run the installation command (this uses the pip program inside your `.venv`):
 ```
-pip install -r requirements.txt
+pip install -r etc/requirements.txt
 ```
 
 ### Run the Experiment
