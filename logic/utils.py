@@ -1,24 +1,15 @@
 from config import *
 from psychopy import core, event
 
-def reset_background(win):
-    win.color = 'black'
-    win.flip()
-
-def show_feedback(win, text_stim, result):
+def show_feedback(result, square):
     if result:
-        win.color = 'green'
-        text_stim.text = "Correct!"
+        square.fillColor = 'green'
     else:
-        win.color = 'red'
-        text_stim.text = "Wrong!"
+        square.fillColor = 'red'
         
-    win.flip()
-    text_stim.draw()
-    reset_background(win)
-    core.wait(FEEDBACK_SHOW_TIME)
+    square.draw()
     
-def get_feedback(win, text_stim, n, reference, keys, previous_key=-1):
+def get_feedback(win, text_stim, n, reference, keys, square, previous_key=-1):
     key = keys[0]
     correct = (
         (key == 'up' and n > reference) or
@@ -28,17 +19,18 @@ def get_feedback(win, text_stim, n, reference, keys, previous_key=-1):
     )
     if previous_key == key:
         correct = False
-    show_feedback(win, text_stim, correct)
+    show_feedback(correct, square)
     return key, correct
 
-def run_stimulus_trial(win, text_stim, n):
-    win.color = 'black'
-    text_stim.text = str(n)
-    text_stim.draw()
-    
-    win.flip()
-    
+def run_stimulus_trial():
     clock = core.Clock()
     keys = event.waitKeys(keyList=['up', 'down', 'left', 'right'])
     rt = clock.getTime()
     return keys, rt
+
+def reset_window(win, text_stim, right_square, left_square, n):
+    right_square.draw()
+    left_square.draw()
+    text_stim.text = str(n)
+    text_stim.draw()
+    win.flip()
