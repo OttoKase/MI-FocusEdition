@@ -10,6 +10,13 @@ info_text = visual.TextStim(win, color="white", height=0.15, wrapWidth=1.5)
 
 left_square = visual.Rect(win, width=0.2, height=0.2, pos=(-0.4, -0.3))
 right_square = visual.Rect(win, width=0.2, height=0.2, pos=(0.4, -0.3))
+
+lights = []
+x_positions = [-0.3, -0.15, 0, 0.15, 0.3]  # five evenly spaced lights
+
+for x in x_positions:
+    lights_square = visual.Rect(win, width=0.1, height=0.1, pos=(x, 0.6), fillColor="gray", lineColor="gray")
+    lights.append(lights_square)
         
 # Play audio in background
 if (SOUND_USED):
@@ -42,13 +49,13 @@ for trial in range(NUMBER_OF_TRIALS):
         
         reset_window(win, text_stim, right_square, left_square, n)
         
-        keys, rt = run_stimulus_trial()
-        key_1, correct_1 = get_feedback(win, text_stim, n, reference, keys, left_square)
+        keys, rt = run_stimulus_trial(win, text_stim, lights, right_square, left_square, n)
+        key_1, correct_1 = get_feedback(n, reference, keys, left_square)
         results.append([trial, reference, trial_loops, n, key_1, correct_1, rt])
         reset_window(win, text_stim, right_square, left_square, n)
         
-        keys, rt = run_stimulus_trial()
-        key_2, correct_2 = get_feedback(win, text_stim, n, reference, keys, right_square, key_1)
+        keys, rt = run_stimulus_trial(win, text_stim, lights, right_square, left_square, n)
+        key_2, correct_2 = get_feedback(n, reference, keys, right_square, key_1)
         results.append([trial, reference, trial_loops, n, key_2, correct_2, rt])
         reset_window(win, text_stim, right_square, left_square, n)
         
