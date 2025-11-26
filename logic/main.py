@@ -1,18 +1,28 @@
 from psychopy import visual, core, sound
 from config import *
 from utils import *
+from datetime import datetime
 import random, csv
 
 win = visual.Window(size=(800,600), color="black")
-text_stim = visual.TextStim(win, color="white", height=0.2)
+text_stim = visual.TextStim(win, color="white", height=0.2, pos=(0, 0.2))
+info_text = visual.TextStim(win, color="white", height=0.15, wrapWidth=1.5)
 
-left_square = visual.Rect(win, width=0.2, height=0.2, pos=(-0.4, -0.4))
-right_square = visual.Rect(win, width=0.2, height=0.2, pos=(0.4, -0.4))
+left_square = visual.Rect(win, width=0.2, height=0.2, pos=(-0.4, -0.3))
+right_square = visual.Rect(win, width=0.2, height=0.2, pos=(0.4, -0.3))
         
 # Play audio in background
-# bg_sound = sound.Sound(SOUND_FILE)
-# bg_sound.play()
+if (SOUND_USED):
+    bg_sound = sound.Sound(SOUND_FILE)
+    bg_sound.play()
 
+# Intro for user
+info_text.text = f"Welcome the start of the experiment!\n\nYour goal is to press the four arrow keys and get as many green boxes as possible. Red boxes are considered to be false answers.\n\nPress any key to continue."
+info_text.draw()
+win.flip()
+event.waitKeys()
+
+# Trial starts
 results = []
 for trial in range(NUMBER_OF_TRIALS):
     reference = random.choice(REFERENCE_NUMBER_RANGE)
@@ -21,7 +31,7 @@ for trial in range(NUMBER_OF_TRIALS):
     win.flip()
     core.wait(REFERENCE_SHOW_TIME)
     
-    for trial_loops in range(NUMBER_OF_TRIAL_LOOPS):
+    for trial_loops in range(NUMBER_OF_LOOPS_INSIDE_TRIAL):
         left_square.fillColor = FEEDBACK_BOX_BASE_COLOR
         right_square.fillColor = FEEDBACK_BOX_BASE_COLOR
         win.color = BACKGROUND_COLOR
@@ -43,12 +53,21 @@ for trial in range(NUMBER_OF_TRIALS):
         reset_window(win, text_stim, right_square, left_square, n)
         
         core.wait(FEEDBACK_SHOW_TIME)
-    
+
+# Outro for user
+info_text.text = f"You have reached the end of the experiment.\n\nThank you for your time and effort."
+info_text.draw()
+win.flip()
+core.wait(INFO_SHOW_TIME)
+
 # Save results
-with open("results/results.csv", "w", newline="") as f:
+today = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+with open(f"results/{today}.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["trial", "reference", "trial_loop", "number", "key", "correct", "reaction_time"])
     writer.writerows(results)
 
-# bg_sound.stop()
+if (SOUND_USED):
+    bg_sound.stop()
+    
 win.close()

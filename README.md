@@ -48,7 +48,7 @@ Make sure you have a file named `requirements.txt` in the root directory of your
 
 Run the installation command (this uses the pip program inside your `.venv`):
 ```
-pip install -r etc/requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Run the Experiment
@@ -56,7 +56,7 @@ Ensure your terminal is in the project folder and the (.venv) is active.
 
 Run the main file:
 ```
-python main.py
+python logic/main.py
 ```
 The experiment window should now launch.
 
