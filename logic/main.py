@@ -37,8 +37,10 @@ results = []
 for trial in range(NUMBER_OF_TRIALS):
     # Play audio in background
     if (SOUND_USED and GROUP_TYPE == "TEST"):
-        bg_sound = sound.Sound(SOUND_FILES[trial])
-        bg_sound.play()
+        trial_audio = sound.Sound(SOUND_FILES[trial])
+        trial_audio.play()
+        trial_audio_start_time = core.getTime()
+        trial_audio_length = trial_audio.getDuration()
     
     reference = random.choice(REFERENCE_NUMBER_RANGE)
     text_stim.text = f"Viitenumber: {reference}"
@@ -69,16 +71,21 @@ for trial in range(NUMBER_OF_TRIALS):
         
         core.wait(FEEDBACK_SHOW_TIME)
         
-    if (GROUP_TYPE == "CONTROL"):
-        core.wait(FEEDBACK_SHOW_TIME)
-    elif (GROUP_TYPE == "TEST"):
+    if (SOUND_USED and GROUP_TYPE == "TEST"):
+        print(f"{trial_audio.status}")
+        while trial_audio.status == "PLAYING":
+            elapsed = core.getTime() - trial_audio_start_time
+            remaining = trial_audio_length - elapsed
+            info_text.text = f"Helifail kestab veel {remaining} sekundit. Palun kuula see lõpuni."
+            info_text.draw()
+            win.flip()
+            core.wait(0.1)
+        
+    if (GROUP_TYPE == "TEST"):
         info_text.text = f"Oled jõudnud {trial+1}. ringi lõpuni.\n\nJärgmisena tuleb vastata paarile küsimusele.\n\nKui küsimustele on vastatud, vajuta jätkamiseks klahvi 'c'."
         info_text.draw()
         win.flip()
         event.waitKeys(keyList=['c'])
-        
-    if (SOUND_USED and GROUP_TYPE == "TEST"):
-        bg_sound.stop()
 
 # Outro for user
 info_text.text = f"Oled jõudnud eksperimendi lõpuni.\n\nJärgmisena tuleb vastata paarile küsimusele."

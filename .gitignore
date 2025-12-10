@@ -1,3 +1,5 @@
 .venv
 results/*
 logic/__pycache__/*
+*.pyc
+*.cpython-311.pyc
