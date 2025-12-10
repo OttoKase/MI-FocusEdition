@@ -23,8 +23,8 @@ def get_feedback(n, reference, keys, square, previous_key=-1):
     return key, correct
 
 def run_stimulus_trial(win, text_stim, lights, right_square, left_square, n):
-    max_time = MAX_TIME        # seconds total
-    light_interval = LIGHT_INTERVAL   # every 4 seconds one light turns on
+    max_time = MAX_TIME                 # seconds total
+    light_interval = LIGHT_INTERVAL     # every x seconds one light turns on
     
     event.clearEvents()
     
