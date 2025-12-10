@@ -68,9 +68,6 @@ for trial in range(NUMBER_OF_TRIALS):
         reset_window(win, text_stim, right_square, left_square, n)
         
         core.wait(FEEDBACK_SHOW_TIME)
-    
-    if (SOUND_USED and GROUP_TYPE == "TEST"):
-        bg_sound.stop()
         
     if (GROUP_TYPE == "CONTROL"):
         core.wait(FEEDBACK_SHOW_TIME)
@@ -79,6 +76,9 @@ for trial in range(NUMBER_OF_TRIALS):
         info_text.draw()
         win.flip()
         event.waitKeys(keyList=['c'])
+        
+    if (SOUND_USED and GROUP_TYPE == "TEST"):
+        bg_sound.stop()
 
 # Outro for user
 info_text.text = f"Oled jõudnud eksperimendi lõpuni.\n\nJärgmisena tuleb vastata paarile küsimusele."
