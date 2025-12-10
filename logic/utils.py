@@ -35,7 +35,7 @@ def run_stimulus_trial(win, text_stim, lights, right_square, left_square, n):
         elapsed = clock.getTime()
 
         # Update lights
-        lights_on = min(int(elapsed // light_interval), 5)
+        lights_on = min(int(elapsed // light_interval) + 1, 5)
         for i, light in enumerate(lights):
             if i < lights_on:
                 if i < 2:
