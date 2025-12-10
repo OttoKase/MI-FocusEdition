@@ -17,7 +17,7 @@ if (SOUND_USED):
     bg_sound.play()
 
 # Intro for user
-info_text.text = f"Welcome the start of the experiment!\n\nYour goal is to press the four arrow keys and get as many green boxes as possible. Red boxes are considered to be false answers.\n\nPress any key to continue."
+info_text.text = f"Tere tulemast eksperimendi algusesse!\n\nSinu ülesanne on vajutada nelja nooleklahvi ja saada võimalikult palju rohelisi kaste. Punased kastid tähendavad vale vastust.\n\nJätkamiseks vajuta suvalist klahvi."
 info_text.draw()
 win.flip()
 event.waitKeys()
@@ -26,7 +26,7 @@ event.waitKeys()
 results = []
 for trial in range(NUMBER_OF_TRIALS):
     reference = random.choice(REFERENCE_NUMBER_RANGE)
-    text_stim.text = f"Reference: {reference}"
+    text_stim.text = f"Viitenumber: {reference}"
     text_stim.draw()
     win.flip()
     core.wait(REFERENCE_SHOW_TIME)
@@ -55,7 +55,7 @@ for trial in range(NUMBER_OF_TRIALS):
         core.wait(FEEDBACK_SHOW_TIME)
 
 # Outro for user
-info_text.text = f"You have reached the end of the experiment.\n\nThank you for your time and effort."
+info_text.text = f"Oled jõudnud eksperimendi lõpuni.\n\n.Järgmisena tuleb vastata paarile küsimusele."
 info_text.draw()
 win.flip()
 core.wait(INFO_SHOW_TIME)
